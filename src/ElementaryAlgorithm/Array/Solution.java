@@ -350,7 +350,7 @@ public class Solution {
         return true;
     }
 
-    //--------------------    旋转图像  -----------------------\
+    //--------------------    旋转图像  -----------------------
     public static void rotate(int[][] matrix) {
         int length = matrix.length;
         //只需要循环前半段
@@ -390,6 +390,38 @@ public class Solution {
         }
     }
 
+    //--------------------    二位数组查找  -----------------------
+    /*
+     * 本地需要注意的是选取的开始位置，选取的标准是可以帮助下次比较减少一列或一行范围----选取右上角或者左上角
+     * 不能是左上角或右下角，这个地方是最小和最大，进行比较只能排除当前这个单个值
+     * 可以将数组旋转45度进行辅助理解
+     */
+    public static boolean findNumberIn2DArray(int[][] matrix, int target) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+        //递归解法
+//        return compare(matrix,target,0,matrix[0].length-1);
+        //循环
+        int row = 0;
+        int col = matrix[0].length-1;
+        while (row < matrix.length && col >= 0){
+            if (matrix[row][col] == target) return true;
+            if (matrix[row][col] > target) {col--;continue;}
+            if (matrix[row][col] < target) {row++;continue;}
+        }
+        return false;
+    }
+
+    public static boolean compare(int[][] matrix, int target, int i, int j){
+        if (i <0 || i >= matrix.length || j < 0 || j >= matrix[0].length) return false;
+        if (matrix[i][j] == target) return true;
+        if (matrix[i][j] < target){
+            return compare(matrix,target,i+1,j);
+        }
+        if (matrix[i][j] > target){
+            return compare(matrix,target,i,j-1);
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         //-------------删除排序数组中的重复项------------------
@@ -434,15 +466,20 @@ public class Solution {
 //        char[][] board = {{'5','3','.','.','7','.','.','.','.'},{'6','.','.','1','9','5','.','.','.'},{'.','9','8','.','.','.','.','6','.'},{'8','.','.','.','6','.','.','.','3'},{'4','.','.','8','.','3','.','.','1'},{'7','.','.','.','2','.','.','.','6'},{'.','6','.','.','.','.','2','8','.'},{'.','.','.','4','1','9','.','.','5'},{'.','.','.','.','8','.','.','7','9'}};
 //        System.out.println(isValidSudoku(board));
 
+        //--------------------    旋转图像  -----------------------
+//        int[][] arr = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+//        for (int[] ints : arr) {
+//            System.out.println(Arrays.toString(ints));
+//        }
+//        System.out.println("--------------------------");
+//        rotate2(arr);
+//        for (int[] ints : arr) {
+//            System.out.println(Arrays.toString(ints));
+//        }
 
-        int[][] arr = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
-        for (int[] ints : arr) {
-            System.out.println(Arrays.toString(ints));
-        }
-        System.out.println("--------------------------");
-        rotate2(arr);
-        for (int[] ints : arr) {
-            System.out.println(Arrays.toString(ints));
-        }
+        //--------------------    二位数组查找  -----------------------
+//        int[][] arr = {{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10, 13, 14, 17, 24},{18, 21, 23, 26, 30}};
+        int[][] arr = {};
+        System.out.println(findNumberIn2DArray(arr,3));
     }
 }

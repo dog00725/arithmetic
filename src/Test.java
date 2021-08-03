@@ -13,6 +13,10 @@ public class Test {
         System.out.println(Arrays.toString(b));
         MergeBU.sort(c);
         System.out.println(Arrays.toString(c));
-
+        System.out.println(Integer.toBinaryString(5));
+        System.out.println(Integer.toBinaryString(-5));
+        System.out.println(Integer.toBinaryString((~5)+1));
+        System.out.println(Integer.toBinaryString(~(-5-1)));
+        System.out.println("aE,a".toLowerCase());
     }
 }
