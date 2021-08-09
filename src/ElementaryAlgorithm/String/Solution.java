@@ -145,6 +145,25 @@ public class Solution {
         return sum >= Integer.MAX_VALUE? Integer.MAX_VALUE:(int) sum;
     }
 
+    //-----替换空格-----
+    public static String replaceSpace(String s) {
+        if (null == s || s.length() == 0){
+            return s;
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = s.length()-1; i >= 0; i--) {
+            if (s.charAt(i) != ' '){
+                stringBuilder.append(s.charAt(i));
+                continue;
+            }
+            stringBuilder.append("02%");
+        }
+
+        stringBuilder.reverse();
+        return stringBuilder.toString();
+    }
+
     public static void main(String[] args) {
         //------反转字符穿-----
 //        char[] s = "hello".toCharArray();
@@ -166,6 +185,11 @@ public class Solution {
         //------验证回文字符串------
 //        System.out.println(isPalindrome("0P"));
 
-        System.out.println(myAtoi("9223372036854775808"));
+        //字符串转整数
+//        System.out.println(myAtoi("9223372036854775808"));
+
+        //-----替换空格-----
+        System.out.println(replaceSpace("we are happy"));
+
     }
 }
