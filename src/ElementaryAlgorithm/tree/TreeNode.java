@@ -1,11 +1,13 @@
 package ElementaryAlgorithm.tree;
 
-public class TreeNode {
-    int val;
+public class TreeNode<T> {
+    T val;
     TreeNode left;
     TreeNode right;
 
-    TreeNode(int x) {
+    TreeNode(T x) {
         val = x;
+    }
+    TreeNode() {
     }
 }
