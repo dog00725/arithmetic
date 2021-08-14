@@ -1,9 +1,7 @@
-package ElementaryAlgorithm.tree;
+package DataStructure.tree;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Queue;
-import java.util.Stack;
 
 public class Solution {
     //前序遍历

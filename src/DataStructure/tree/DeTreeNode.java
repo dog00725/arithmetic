@@ -1,4 +1,4 @@
-package ElementaryAlgorithm.tree;
+package DataStructure.tree;
 
 public class DeTreeNode<T> extends TreeNode{
     T val;

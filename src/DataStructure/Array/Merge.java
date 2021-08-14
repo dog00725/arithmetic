@@ -1,4 +1,4 @@
-package ElementaryAlgorithm.Array;
+package DataStructure.Array;
 
 public class Merge {
 

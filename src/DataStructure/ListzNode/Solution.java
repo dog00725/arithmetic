@@ -1,4 +1,4 @@
-package ElementaryAlgorithm.ListzNode;
+package DataStructure.ListzNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;

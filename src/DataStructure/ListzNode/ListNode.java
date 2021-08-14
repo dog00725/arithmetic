@@ -1,4 +1,4 @@
-package ElementaryAlgorithm.ListzNode;
+package DataStructure.ListzNode;
 
 public class ListNode {
     int val;
