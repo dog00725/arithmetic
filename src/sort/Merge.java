@@ -1,8 +1,5 @@
 package sort;
 
-
-import java.util.Arrays;
-
 /**
  * 自顶向下递归归并
  * 比较次数 NlgN
@@ -14,26 +11,26 @@ public class Merge {
     /**
      * 归并
      * @param a   归并的数组
-     * @param hi  归并开始位置
+     * @param left  归并开始位置
      * @param mid  中间值
-     * @param lo  归并结束位置
+     * @param right  归并结束位置
      */
-    public static void merge(Comparable[] a,int hi,int mid,int lo){
+    public static void merge(Comparable[] a,int left,int mid,int right){
 
-        int i = hi, j = mid+1;  //左右两边的起始下标
+        int i = left, j = mid+1;  //左右两边的起始下标
 
         //复制数组
-        for(int k=0;k<=lo;++k){
+        for(int k=0;k<=right;++k){
             aux[k] = a[k];
         }
 
         //归并
-        for (int k=hi;k<=lo;++k){
+        for (int k=left;k<=right;++k){
             //左边元素取完，取右边元素
             if (i > mid) a[k] = aux[j++];
             //右边元素取完，取左边元素
-            if (j > lo) a[k] = aux[i++];
-            //左边元素比较小去右边元素
+            if (j > right) a[k] = aux[i++];
+            //左边元素比较小取左边元素
             else if (aux[i].compareTo(aux[j]) <= 0) a[k] = aux[i++];
             //右边元素比较小，取右边元素
             else a[k] = aux[j++];

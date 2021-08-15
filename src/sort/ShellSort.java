@@ -1,23 +1,27 @@
 package sort;
 
 /**
- * time O(n^2)
- * 简单选择排序
- * 在序列中找到最小（大）元素，放到序列的起始位置作为已排序序列
- * 再从剩余未排序元素中继续寻找最小（大）元素，放到已排序序列的末尾。
+ * 把数组分成几块，每一块进行一个插入排序；
+ * 而分块的依据在于增量的选择分好块之后，从gap开始到n，每一组和它前面的元素（自己组内的）进行插入排序；
  */
 
-public class SimpleSelectSort {
+public class ShellSort {
+
 
     public static void sort(Comparable[] comparables){
-        for (int i = 0; i < comparables.length-1; i++) {
-            int min = i;
-            for (int j = i; j < comparables.length; j++) {
-                if (less(comparables[j],comparables[min])){
-                    min = j;
+
+        int length = comparables.length;
+        int step = 1;
+        while (step < length/3) step = 3* step + 1;
+        while (step > 0){
+            for (int i = 0; i < comparables.length; i+=step) {
+                for (int j = 0; j < i; j+= step) {
+                    if (less(comparables[i],comparables[j])){
+                        exch(comparables,j,i);
+                    }
                 }
             }
-            exch(comparables,i,min);
+            step /= 3;
         }
     }
 
@@ -46,4 +50,5 @@ public class SimpleSelectSort {
         System.out.println("排序后:");
         show(arrays);
     }
+
 }
