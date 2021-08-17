@@ -60,11 +60,32 @@ public class Solution {
         return fib;
     }
 
+    /*
+     * 旋转数组的最小数字
+     * 有序数组查找优先考虑二分查找，使用二分查找可以将原本线性的时间复杂度降低为对数级 log n
+     * 本地要注意特殊情况，例如{1,1,1,0,1} 或 {1,0,1,1,1} 此种情况下无法判断中间索引是位于左排序数组还是有排序数组，此时可以减少数组数量（减少完旋转点仍旧位于i，j 之间）
+     */
+    public static int minArray(int[] number){
+        int i = 0;
+        int j = number.length-1;
+        while (i < j){
+            int mid = (i+j)/2;
+            if (number[mid] < number[j]) j = mid;
+            else if (number[mid] > number[j]) i = mid+1;
+            else j--;
+        }
+        return number[i];
+    }
+
     public static void main(String[] args) {
         //斐波那契
         System.out.println("斐波那契:"+fibLoop(48));
 //        System.out.println("斐波那契:"+fibRecursion(48));
+//        System.out.println("==============================");
+//        System.out.println("青蛙跳台阶:"+numWays(48));
         System.out.println("==============================");
-        System.out.println("青蛙跳台阶:"+numWays(48));
+//        int[] numbers = {3,4,5,1,2};
+        int[] numbers = {1,1,1,0,1};
+        System.out.println(minArray(numbers));
     }
 }
