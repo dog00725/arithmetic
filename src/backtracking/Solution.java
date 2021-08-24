@@ -2,8 +2,6 @@ package backtracking;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * 回溯算法
