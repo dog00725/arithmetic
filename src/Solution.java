@@ -77,15 +77,33 @@ public class Solution {
         return number[i];
     }
 
+    //数值的整数次方
+    public static double myPow(double x, int n) {
+        if (x == 0) return 0;
+        long absolute = n;
+        if (n < 0){
+            x = 1D/x;
+            absolute = -absolute;
+        }
+        double result = 1D;
+        for (long pow = absolute;pow > 0;pow = pow >>=1){
+            if ((pow & 1) ==1) result *=x;
+            x *= x;
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         //斐波那契
-        System.out.println("斐波那契:"+fibLoop(48));
+//        System.out.println("斐波那契:"+fibLoop(48));
 //        System.out.println("斐波那契:"+fibRecursion(48));
 //        System.out.println("==============================");
 //        System.out.println("青蛙跳台阶:"+numWays(48));
         System.out.println("==============================");
 //        int[] numbers = {3,4,5,1,2};
-        int[] numbers = {1,1,1,0,1};
-        System.out.println(minArray(numbers));
+//        int[] numbers = {1,1,1,0,1};
+//        System.out.println(minArray(numbers));
+        System.out.println("==============================");
+        System.out.println(myPow(2D,-2147483648));
     }
 }
