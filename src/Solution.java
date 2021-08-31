@@ -1,5 +1,6 @@
-import java.util.HashMap;
-import java.util.Map;
+import DataStructure.ListzNode.ListNode;
+
+import java.util.*;
 
 public class Solution {
 
@@ -93,17 +94,130 @@ public class Solution {
         return result;
     }
 
+    //打印从1到最大的n位数
+    /*
+     * 该题思考时需要考虑n位数是否超出表示范围,即大数的解决方式
+     * 因此可以用数组表示数
+     */
+    public static int[] printNumbers(int n) {
+        if (n <= 0) return new int[0];
+        StringBuilder res = new StringBuilder();
+        int[] list = new int[(int) (Math.pow(10,n)-1)];
+        for (int i = 0; i < n; i++) {
+            res.append('0');
+        }
+        String temp;
+        int j = 0;
+        while (!increment(res)){
+            temp = "";
+            boolean haveNumber = false;
+            for (int i = 0; i < res.length(); i++) {
+                if (res.charAt(i) == '0' && !haveNumber) continue;
+                temp += res.charAt(i);
+                haveNumber = true;
+            }
+            list[j++] = Integer.parseInt(temp);
+        }
+        return list;
+    }
+
+    //只有最高位进一时表示已到最大
+    private static boolean increment(StringBuilder stringBuilder){
+        boolean isOverFlow = false;
+        for (int i = stringBuilder.length()-1; i >= 0; i--) {
+            char num = (char)(stringBuilder.charAt(i)+1);
+            //判断是否需要进位
+            if (num > '9'){
+                //判断是否是最高位
+                stringBuilder.replace(i,i+1,"0");
+                if (i == 0) {
+                    isOverFlow = true;
+                }
+            }else {
+                stringBuilder.replace(i,i+1,String.valueOf(num));
+                break;
+            }
+        }
+        return isOverFlow;
+    }
+
+    //删除链表节点
+    public ListNode deleteNode(ListNode head, int val) {
+        if (head == null) return head;
+        ListNode chain = head;
+        ListNode temp = null;
+        while (chain.next != null){
+            temp = chain.next;
+            if (temp.val == val) {
+                chain.next = temp.next;
+                break;
+            }
+            chain = chain.next;
+        }
+        return head;
+    }
+
+    //正则表达式匹配
+    /*
+     * 使用动态规划
+     */
+    public static boolean isMatch(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+
+        boolean[][] matrix = new boolean[n+1][m+1];
+        matrix[0][0] = true;
+
+        for (int i = 0; i < n+1; i++) {
+            for (int j = 0; j < m+1 ; j++){
+                //分成空正则和非空正则两种
+                if (j == 0) {
+                    matrix[i][j] = i == 0;
+                } else {
+                    //非空正则分为两种情况 * 和 非*
+                    if (p.charAt(j - 1) != '*') {
+                        if (i > 0 && (s.charAt(i - 1) == p.charAt(j - 1) || p.charAt(j - 1) == '.')) {
+                            matrix[i][j] = matrix[i - 1][j - 1];
+                        }
+                    } else {
+                        //碰到 * 了，分为看和不看两种情况
+                        //不看
+                        if (j >= 2) {
+                            matrix[i][j] |= matrix[i][j - 2];
+                        }
+                        //看
+                        if (i >= 1 && j >= 2 && (s.charAt(i - 1) == p.charAt(j - 2) || p.charAt(j - 2) == '.')) {
+                            matrix[i][j] |= matrix[i - 1][j];
+                        }
+                    }
+                }
+            }
+        }
+
+        return matrix[n][m];
+    }
+
     public static void main(String[] args) {
         //斐波那契
 //        System.out.println("斐波那契:"+fibLoop(48));
 //        System.out.println("斐波那契:"+fibRecursion(48));
 //        System.out.println("==============================");
 //        System.out.println("青蛙跳台阶:"+numWays(48));
-        System.out.println("==============================");
+        //旋转数组的最小数字
+//        System.out.println("==============================");
 //        int[] numbers = {3,4,5,1,2};
 //        int[] numbers = {1,1,1,0,1};
 //        System.out.println(minArray(numbers));
+        //数值的整数次方
+//        System.out.println("==============================");
+//        System.out.println(myPow(2D,-2147483648));
+        //打印从1到最大的n位数
+//        System.out.println("==============================");
+//        System.out.println(Arrays.toString(printNumbers(2)));
+        //删除链表节点
         System.out.println("==============================");
-        System.out.println(myPow(2D,-2147483648));
+        String s = "aa";
+        String p = "a*";
+        System.out.println(isMatch(s,p));
     }
 }
