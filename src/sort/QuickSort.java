@@ -67,6 +67,12 @@ public class QuickSort {
         return right;
     }
 
+    /*
+     * 下面的三个方法是工具方法
+     * less 比较大小
+     * exch 交换元素
+     * show 打印
+     */
     private static boolean less(Comparable a, Comparable b){
         return a.compareTo(b) < 0;
     }

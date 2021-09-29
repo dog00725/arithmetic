@@ -197,6 +197,139 @@ public class Solution {
         return matrix[n][m];
     }
 
+    //表示数字的字符串
+    public static boolean isNumber(String s) {
+        if (null == s) return false;
+        s = s.trim();
+        char[] chars = s.toCharArray();
+        boolean findNumber = false;
+        boolean findDot = false;
+        boolean findE = false;
+
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '-' || chars[i] == '+'){
+                if (i != 0 && (chars[i-1] != 'e' && chars[i-1] != 'E')){
+                    return false;
+                }
+            } else if (chars[i] >= '0' && chars[i] <= '9') {
+                findNumber = true;
+            } else if (chars[i] == '.'){
+                if (findDot || findE){
+                    return false;
+                }
+                findDot = true;
+            }else if (chars[i] == 'e' || chars[i] == 'E'){
+                if (findE || !findNumber){
+                    return false;
+                }
+                findE = true;
+                findNumber = false; //保证e后面也有数字
+            }else{
+                return false;
+            }
+        }
+        return findNumber;
+    }
+
+    //奇数位于偶数前面
+    /*
+     * 第一个想法就是 类似冒泡，循环数组遇到一个偶数就将其移动到后面   time:O(n^2)
+     * 相对较好的解法：使用双指针，当head指针指向偶数并且tail指向奇数两者交换，两葛指针同时移动
+     * 当head指向奇数就++
+     * 当tail指向偶数就—-
+     */
+    public static int[] exchange(int[] nums) {
+        if (null == nums) return null;
+
+        int length = nums.length;
+        int head = 0;
+        int tail = length - 1;
+
+        while (head < tail) {
+            if (nums[head] % 2 == 0 && nums[tail] % 2 != 0){
+                int temp = nums[head];
+                nums[head++] = nums[tail];
+                nums[tail--] = temp;
+            }
+            if (nums[head] % 2 != 0) head++;
+            if (nums[tail] % 2 == 0) tail--;
+        }
+        return nums;
+    }
+
+    /*
+     * 反转链表
+     */
+    public ListNode reverseList(ListNode head) {
+        if (null == head){
+            return head;
+        }
+        ListNode originalHead = head;
+        ListNode newHead = null;
+        ListNode temp = null;
+        while (originalHead != null){
+            temp = new ListNode(originalHead.val);
+            if (newHead == null){
+                newHead = temp;
+            }else {
+                temp.next = newHead;
+            }
+            originalHead = originalHead.next;
+            newHead = temp;
+        }
+        return newHead;
+    }
+
+    /*
+     * 合并两个有序链表
+     */
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null && l2 == null){
+            return null;
+        }
+        if (l1 == null){
+            return l2;
+        }
+        if (l2 == null){
+            return l1;
+        }
+
+        ListNode head1 = l1;
+        ListNode head2 = l2;
+        ListNode newList = null;
+        ListNode result = null;
+        ListNode temp = newList;
+        while (head1 != null || head2 != null){
+            if (head1 != null && head2 != null){
+                if (head1.val <= head2.val){
+                    temp = new ListNode(head1.val);
+                    head1 = head1.next;
+                }
+                else if (head2.val <= head1.val){
+                    temp = new ListNode(head2.val);
+                    head2 = head2.next;
+                }
+                if (newList == null){
+                    newList = temp;
+                    result = temp;
+                }else {
+                    newList.next = temp;
+                }
+                newList = temp;
+                continue;
+            }
+            if (head1 == null) {
+                newList.next = head2;
+                break;
+            }
+            if (head2 == null) {
+                newList.next = head1;
+                break;
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         //斐波那契
 //        System.out.println("斐波那契:"+fibLoop(48));
@@ -215,9 +348,40 @@ public class Solution {
 //        System.out.println("==============================");
 //        System.out.println(Arrays.toString(printNumbers(2)));
         //删除链表节点
-        System.out.println("==============================");
-        String s = "aa";
-        String p = "a*";
-        System.out.println(isMatch(s,p));
+//        System.out.println("==============================");
+//        String s = "aa";
+//        String p = "a*";
+//        System.out.println(isMatch(s,p));
+        //表示数字的字符串
+//        System.out.println("==============================");
+//        String s = "-1.E-16";
+//        System.out.println(isNumber(s));
+        //调整数组顺序奇数位于偶数前面
+//        System.out.println("==============================");
+//        int[] nums = {1,2,3,4};
+//        System.out.println(Arrays.toString(exchange(nums)));
+        //合并链表
+//        System.out.println("==============================");
+//        ListNode head1 = new ListNode(1);
+//        head1.next= new ListNode(2);
+//        head1.next.next= new ListNode(4);
+//        ListNode head2 = new ListNode(1);
+//        head2.next= new ListNode(3);
+//        head2.next.next= new ListNode(4);
+//        ListNode merge = mergeTwoLists(head1,head2);
+//        for (ListNode i = merge; i != null ; i = i.next) {
+//            System.out.println(i.val);
+//        }
+
+        System.out.println('a'+0);
+        StringBuilder builder = new StringBuilder();
+        char e = 'A';
+        builder.append( (e+=32));
+
+        builder.append("sdd");
+        System.out.println(new Object[]{new String[3]});
+        System.out.println('A'+32);
     }
+
+
 }
