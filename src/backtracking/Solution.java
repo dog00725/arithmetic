@@ -2,6 +2,10 @@ package backtracking;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 回溯算法
@@ -62,14 +66,144 @@ public class Solution {
                 + dfs(x,y+1,k,row,col,path) + dfs(x,y-1,k,row,col,path);
     }
 
+    /**
+ 	  * 打开转盘锁 单向BFS超时
+     */
+    //双向BFS
+    public int openLock(String[] deadends, String target) {
+        String password = "0000";
+        if (password.equals(target)){
+            return 0;
+        }
+        List<String> visited = new ArrayList<>();
+        for(String str:deadends){
+        	visited.add(str);
+        }
+        Set<String> q1 = new HashSet<>();
+        Set<String> q2 = new HashSet<>();
+        q1.add(password);
+
+        int step = 0;
+        while(!q1.isEmpty() && !q2.isEmpty()){
+        	Set<String> temp = new HashSet<>();
+            for(String str : q1){
+            	if(q2.contains(str)) {
+            		return step;
+            	}
+            	
+                for(int j=0;j<4;j++){
+                    String plus = plusOne(str,j);
+                    String min = minOne(str,j);
+                    if(!visited.contains(plus)){
+                    	temp.add(plus);
+                        visited.add(plus);
+                    }
+                    if(!visited.contains(min)){
+                    	temp.add(min);
+                        visited.add(min);
+                    }
+                }
+                
+            }
+            step++;
+            q1 = q2;
+            q2 = temp;
+        }
+        return -1;
+    }
+    //向上拨动一位
+    private String plusOne(String password, int j){
+        char[] chars = password.toCharArray();
+        if(chars[j] == '9'){
+            chars[j] = '0';
+        }else{
+            chars[j] += 1;
+        }
+        return new String(chars);
+    }
+    //向下拨动一位
+    private String minOne(String password, int j){
+        char[] chars = password.toCharArray();
+        if(chars[j] == '0'){
+            chars[j] = '9';
+        }else{
+            chars[j] -= 1;
+        }
+        return new String(chars);
+    }
+
+    //岛屿周长
+    public int islandPerimeter(int[][] grid) {
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j] == 1){
+                    return backTrack(grid,i,j);
+                }
+            }
+        }
+        return 0;
+    }
+
+    public int backTrack(int[][] grid,int i,int j){
+        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0){
+            return 1;
+        }
+        if(grid[i][j] != 1){
+            return 0;
+        }
+        grid[i][j] = 2;
+        int c = backTrack(grid,i-1,j)+backTrack(grid,i+1,j)+backTrack(grid,i,j+1)+backTrack(grid,i,j-1);
+        return c;
+    }
+
+    //岛屿面积
+    public int maxAreaOfIsland(int[][] grid) {
+        int maxArea = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if(grid[i][j] == 1){
+                    maxArea = Math.max(dfs(copyGrid(grid),i,j),maxArea);
+                }else{
+                    grid[i][j] = 1;
+                    maxArea = Math.max(dfs(copyGrid(grid),i,j),maxArea);
+                    grid[i][j] = 0;
+                }
+
+            }
+        }
+        return maxArea;
+    }
+
+    private int[][] copyGrid(int[][] grid){
+        int length = grid.length;
+        int col = grid[0].length;
+        int[][] copy = new int[length][col];
+        for (int i = 0; i < length; i++) {
+             System.arraycopy(grid[i],0,copy[i],0,grid[i].length);
+        }
+        return copy;
+    }
+
+    private int dfs(int[][] grid, int i, int j){
+        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0){
+            return 0;
+        }
+        grid[i][j] = 0;
+        return 1+dfs(grid,i-1,j)+dfs(grid,i+1,j)+dfs(grid,i,j-1)+dfs(grid,i,j+1);
+    }
     public static void main(String[] args) {
+        Solution solution = new Solution();
         //矩阵中的路径
 //        char[][] board = {{'A','A'}};
 //        String word = "AAA";
 //        System.out.println(exist(board,word));
 
         //机器人的运动范围
-        System.out.println(movingCount(3,2,17));
+//        System.out.println(movingCount(3,2,17));
+
+        //岛屿的周长
+        int[][] grid = {{1,0},{0,1}};
+        System.out.println(solution.maxAreaOfIsland(grid));
     }
 
 }
