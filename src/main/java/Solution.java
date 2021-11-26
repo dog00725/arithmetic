@@ -377,7 +377,8 @@ public class Solution {
         StringBuilder builder = new StringBuilder();
         char e = 'A';
         builder.append( (e+=32));
-
+        String str = "aaa";
+        System.out.println(str.substring(0,str.length()-1));
         builder.append("sdd");
         System.out.println(new Object[]{new String[3]});
         System.out.println('A'+32);

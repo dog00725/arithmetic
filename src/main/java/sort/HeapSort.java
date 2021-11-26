@@ -77,12 +77,4 @@ public class HeapSort {
         System.out.println();
     }
 
-    public static void main(String[] args) {
-        Integer[] arrays = {5,6,3,1,7,9,24,2,4};
-        System.out.println("排序前:");
-        show(arrays);
-        sort(arrays);
-        System.out.println("排序后:");
-        show(arrays);
-    }
 }
